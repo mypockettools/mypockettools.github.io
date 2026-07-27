@@ -19,41 +19,45 @@
                 <button type="button" class="closeBtn" onclick="closeDialog(addNewNoteBg)">X</button>
             </div>
             <div id="dialogContent">
-                <input type="text" id="noteTitle" class="inputs margins" placeholder="Τίτλος σημείωσης">
+                <input type="text" id="noteTitle" class="inputs margins" placeholder="">
                 <br>
-                <textarea id="noteContentInput" class="inputs margins" placeholder="Γράψτε σημειώσεις εδώ..."></textarea>
+                <textarea id="noteContentInput" class="inputs margins" placeholder=""></textarea>
             </div>
             <div id="dialogMenu">
-                <button type="button" id="cancelBtn" class="buttons" onclick="closeDialog(addNewNoteBg)">Ακύρωση</button>
+                <button type="button" id="cancelBtn" class="buttons" onclick="closeDialog(addNewNoteBg)"></button>
                 <button type="button" id="SaveBtn" class="buttons"
                     onclick='saveNote(
                         document.getElementById("noteTitle").value,
                         document.getElementById("noteContentInput").value,
                         document.getElementById("editId").textContent
                     )'>
-                    Αποθήκευση
                 </button>
             </div>
         </div>
     </div>
     <div id="settingsBg">
         <div style="display:flex; flex-direction: row; justify-content:space-between;">
-            <h2>Ρυθμίσεις</h2>
-            <button type="button" class="closeBtn" class="buttons" onclick="closeDialog(settingsBg)">X</button>
+            <h2 id="pageTitle"></h2>
+            <button type="button" class="closeBtn buttons" onclick="closeDialog(settingsBg)">X</button>
         </div>
-            <label for="themeSelect">Θέμα:</label>
-            <select id="themeSelect" class="selects">
-                <option value="default">Προεπιλογή</option>
-                <option value="light">Φωτεινό</option>
-                <option value="dark">Σκοτεινό</option>
+            <label class="selectLabels" for="langSelect"></label>
+            <select id="langSelect" class="selects">
+                <option value="el"></option>
+                <option value="en"></option>
             </select>
-            <label for="sortNotes">Ταξινόμηση σημειώσεων:</label>
+            <label class="selectLabels" for="themeSelect"></label>
+            <select id="themeSelect" class="selects">
+                <option value="default"></option>
+                <option value="light"></option>
+                <option value="dark"></option>
+            </select>
+            <label class="selectLabels" for="sortNotes"></label>
             <select id="sortNotes" class="selects">
-                <option value="atoz">Α-Ω</option>
-                <option value="ztoa">Ω-Α</option>
+                <option value="atoz"></option>
+                <option value="ztoa"></option>
             </select>
 
-        <button id="deleteAll" class="buttons" onclick="confirmReset()">Διαγραφή όλων των σημειώσεων</button>
+        <button id="deleteAll" class="buttons" onclick="confirmReset()"></button>
     </div>
     <div id="container">
         <div id="header">
