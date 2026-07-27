@@ -13,23 +13,28 @@ let notesContent = createStack("notesContent");
 let notesId = createStack("notesId");
 let notesDate=createStack("notesDate");
 var themeSelect=document.getElementById("themeSelect");
+var langSelect=document.getElementById("langSelect");
 var storedTitles;
 var storedContents;
 var storedId;
 var storedDate;
 // Αρχική εμφάνιση αποθηκευμένων σημειώσεων
 displayNote();
+//main loop σαν main function sth C/C++
 window.addEventListener("DOMContentLoaded",()=>{
-    var savedTheme=localStorage.getItem("theme");
+    var savedTheme=localStorage.getItem("theme") || "default";
     themeSelect.value=savedTheme;
     var savedThemeBg=localStorage.getItem("themeBg");
     var savedColor=localStorage.getItem("color");
-    console.log("savedTheme: "+savedTheme, "savedThemeColor: "+savedThemeBg);
+    var savedLang=localStorage.getItem("lang") || "en";
+    langSelect.value=savedLang;
+    console.log("savedTheme: "+savedTheme, "savedThemeColor: "+savedThemeBg, "savedLang:",savedLang);
     if(savedTheme){
         themeSelect.value=savedTheme;
         container.style.backgroundColor=savedThemeBg;
         container.style.color=savedColor;
     }
+    changeLang(langSelect.value);
 });
 // Προσθήκη και επεξεργασία σημείωσης
 function addNewNoteDialog(id=null) {
@@ -128,6 +133,58 @@ function deleteNote(id) {
         displayNote();
     }
 }
+function changeLang(choice){
+    if(choice=="el"){
+        document.getElementById("noteTitle").placeholder="Τίτλος σημείωσης";
+        document.getElementById("noteContentInput").placeholder="Γράψτε σημειώσεις εδώ...";
+        document.getElementById("cancelBtn").textContent="Ακύρωση";
+        document.getElementById("SaveBtn").textContent="Αποθήκευση";  
+        document.getElementById("pageTitle").textContent="Ρυθμίσεις";
+       var labels=document.querySelectorAll(".selectLabels");
+       labels[0].textContent="Γλώσσα:";
+       labels[1].textContent="Θέμα:";
+       labels[2].textContent="Ταξινόμηση σημειώσεων:";
+       const langSelect= document.getElementById("langSelect");
+        langSelect.options[0].textContent = "Ελληνικά";
+        langSelect.options[1].textContent = "Αγγλικά";
+
+       const themeSelect = document.getElementById("themeSelect");
+        themeSelect.options[0].textContent = "Προεπιλογή";
+        themeSelect.options[1].textContent = "Φωτεινό";
+        themeSelect.options[2].textContent = "Σκοτεινό";
+
+        const sortNotes = document.getElementById("sortNotes");
+        sortNotes.options[0].textContent = "Α-Ω";
+        sortNotes.options[1].textContent = "Ω-Α";
+
+        document.getElementById("deleteAll").textContent="Διαγραφή όλων των σημειώσεων";
+    }else if(choice=="en"){
+        document.getElementById("noteTitle").placeholder="Note Title";
+        document.getElementById("noteContentInput").placeholder="Write your notes here...";
+        document.getElementById("cancelBtn").textContent="Cancel";
+        document.getElementById("SaveBtn").textContent="Save";
+        document.getElementById("pageTitle").textContent="Settings";
+        var labels=document.querySelectorAll(".selectLabels");
+       labels[0].textContent="Language:";
+       labels[1].textContent="Theme:";
+       labels[2].textContent="Note Sorting:";
+       const langSelect = document.getElementById("langSelect");
+        langSelect.options[0].textContent = "Greek";
+        langSelect.options[1].textContent = "English";
+
+        const themeSelect = document.getElementById("themeSelect");
+        themeSelect.options[0].textContent = "Default";
+        themeSelect.options[1].textContent = "Light";
+        themeSelect.options[2].textContent = "Dark";
+
+        const sortNotes = document.getElementById("sortNotes");
+        sortNotes.options[0].textContent = "A-Z";
+        sortNotes.options[1].textContent = "Z-A";
+
+        document.getElementById("deleteAll").textContent="Delete all notes";
+    }
+    localStorage.setItem("lang", choice);
+}
 // Σύνδεση κουμπιού "Add Note" με το dialog
 createNoteBtn.addEventListener("click", addNewNoteDialog);
 // Κουμπί ρυθμισεων
@@ -135,6 +192,10 @@ settingsBtn.addEventListener("click",()=>openDialog(settingsBg));
 //Κουμπί αλλαγής theme
 themeSelect.addEventListener("change",()=>{
     theme(themeSelect.value);
+});
+//Κουμπί αλλαγής theme
+langSelect.addEventListener("change",()=>{
+    changeLang(langSelect.value);
 });
 var sortNotes=document.getElementById("sortNotes");
 sortNotes.addEventListener("change",()=>{
@@ -165,9 +226,8 @@ sortNotes.addEventListener("change",()=>{
     console.log("ids:", storedId);
 
     localStorage.setItem("notesTitle", JSON.stringify(storedTitles));
-     localStorage.setItem("notesDates", JSON.stringify(storedDate));
+    localStorage.setItem("notesDate", JSON.stringify(storedDate));
     localStorage.setItem("notesContent", JSON.stringify(storedContents));
     localStorage.setItem("notesId", JSON.stringify(storedId));
     displayNote();
 });
-
